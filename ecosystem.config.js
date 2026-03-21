@@ -8,7 +8,7 @@ module.exports = {
       cwd: './',
       env: {
         SERVER_PORT: 9000,
-        SPRING_PROFILES_ACTIVE: 'git',
+        SPRING_PROFILES_ACTIVE: 'git,dev',
       },
     },
     {
