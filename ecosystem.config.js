@@ -6,7 +6,8 @@ module.exports = {
       args: ['-jar', 'config-server/target/config-server-1.0.0.jar'],
       cwd: './',
       env: {
-        SERVER_PORT: 8888
+        SERVER_PORT: 9000,
+        SPRING_PROFILES_ACTIVE: 'git'
       }
     },
     {
@@ -15,7 +16,8 @@ module.exports = {
       args: ['-jar', 'service-registry/target/service-registry-1.0.0.jar'],
       cwd: './',
       env: {
-        SERVER_PORT: 8761
+        SERVER_PORT: 8761,
+        CONFIG_SERVER_URI: 'http://localhost:9000'
       }
     },
     {
@@ -25,7 +27,7 @@ module.exports = {
       cwd: './',
       env: {
         SERVER_PORT: 8080,
-        CONFIG_SERVER_URI: 'http://localhost:8888',
+        CONFIG_SERVER_URI: 'http://localhost:9000',
         EUREKA_URI: 'http://localhost:8761/eureka'
       }
     }
