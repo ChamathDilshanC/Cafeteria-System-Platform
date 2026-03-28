@@ -9,6 +9,7 @@ jobs:
       VM_INSTANCE_NAME: cafeteria-system-vm-platform-seed
       VM_ZONE: asia-southeast1-c
       USERNAME: chammaofficial12
+      IMAGE_NAME: cafeteria-system-vm-platform-seed-boot-image-v7
 
     permissions:
       contents: 'read'
@@ -44,3 +45,7 @@ jobs:
       - name: Stop the cafeteria-system-vm-platform-seed instance
         run: |
           gcloud compute instances stop ${{ env.VM_INSTANCE_NAME }} --zone=${{ env.VM_ZONE }}
+
+      - name: Delete the boot disk of the cafeteria-system-vm-platform-seed instance
+        run: |
+          gcloud compute images delete ${{ env.IMAGE_NAME }} --quiet
