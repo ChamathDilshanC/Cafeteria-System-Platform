@@ -5,6 +5,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      VM_INSTANCE_NAME: cafeteria-system-vm-platform-seed
+      VM_ZONE: asia-southeast1-c
+
     permissions:
       contents: 'read'
       id-token: 'write'
@@ -22,4 +26,9 @@ jobs:
 
       - name: Start the cafeteria-system-vm-platform-seed instance
         run: |
-          gcloud compute instances start cafeteria-system-vm-platform-seed --zone=asia-southeast1-c
+          gcloud compute instances start ${{ env.VM_INSTANCE_NAME }} --zone=${{ env.VM_ZONE }}
+
+      - name: Connnect with the cafeteria-system-vm-platform-seed through SSH and pull the latest code from the repository
+        run: |
+          gcloud compute ssh ${{ env.VM_INSTANCE_NAME }} --zone=${{ env.VM_ZONE }}
+          --command "echo 'Connected to ${{ env.VM_INSTANCE_NAME }} Successfully!'"
