@@ -1,0 +1,12 @@
+name: Cafetaria System - GCP Deployment
+on: push
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: First Step Of Deployment
+        run: echo "Starting GCP Deployment Process..."
+
+      - name: Second Step Of Deployment
+        run: echo "Deploying to Google Cloud Platform..."
