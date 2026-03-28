@@ -8,6 +8,7 @@ jobs:
     env:
       VM_INSTANCE_NAME: cafeteria-system-vm-platform-seed
       VM_ZONE: asia-southeast1-c
+      USERNAME: chammaofficial12
 
     permissions:
       contents: 'read'
@@ -28,8 +29,15 @@ jobs:
         run: |
           gcloud compute instances start ${{ env.VM_INSTANCE_NAME }} --zone=${{ env.VM_ZONE }}
 
-      - name: Connnect with the cafeteria-system-vm-platform-seed through SSH and pull the latest code from the repository
+      - name: Connect and Update Code
         run: |
-          gcloud compute ssh ${{ env.VM_INSTANCE_NAME }} \
-                  --zone=${{ env.VM_ZONE }} \
-                  --command "echo 'Connected to ${{ env.VM_INSTANCE_NAME }} Successfully!'"
+          gcloud compute ssh ${{ env.USERNAME }}@${{ env.VM_INSTANCE_NAME }} \
+            --zone=${{ env.VM_ZONE }} \
+            --quiet \
+            --command "
+              echo 'Connected to ${{ env.VM_INSTANCE_NAME }} Successfully!' && \
+              cd Cafeteria-System-Platform/ && \
+              git pull --recurse-submodules && \
+              source ~/.bashrc && \
+              mvn clean package
+            "
