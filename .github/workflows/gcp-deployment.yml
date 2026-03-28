@@ -41,3 +41,6 @@ jobs:
               source ~/.bashrc && \
               mvn clean package
             "
+      - name: Stop the cafeteria-system-vm-platform-seed instance
+        run: |
+          gcloud compute instances stop ${{ env.VM_INSTANCE_NAME }} --zone=${{ env.VM_ZONE }}
