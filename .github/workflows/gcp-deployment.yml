@@ -10,6 +10,7 @@ jobs:
       VM_ZONE: asia-southeast1-c
       USERNAME: chammaofficial12
       IMAGE_NAME: cafeteria-system-vm-platform-seed-boot-image-v7
+      REGION: asia-southeast1
 
     permissions:
       contents: 'read'
@@ -49,3 +50,10 @@ jobs:
       - name: Delete the boot disk of the cafeteria-system-vm-platform-seed instance
         run: |
           gcloud compute images delete ${{ env.IMAGE_NAME }} --quiet
+
+      - name: Create a new boot image from the updated instance
+        run: |
+          gcloud compute images create ${{ env.IMAGE_NAME }} \
+          --source-disk=${{ env.VM_INSTANCE_NAME }} \
+          --source-disk-zone=${{ env.VM_ZONE }} \
+          --storage-location=${{ env.REGION }}
