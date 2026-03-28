@@ -7,10 +7,12 @@ jobs:
 
     env:
       VM_INSTANCE_NAME: cafeteria-system-vm-platform-seed
+      INSTANCE_GROUP_NAME: mig-platform
       VM_ZONE: asia-southeast1-c
       USERNAME: chammaofficial12
       IMAGE_NAME: cafeteria-system-vm-platform-seed-boot-image-v7
       REGION: asia-southeast1
+      INSTANCE_TEMPLATE_NAME: cafeteria-system-vm-platform-seed-template-v7
 
     permissions:
       contents: 'read'
@@ -58,3 +60,14 @@ jobs:
           --source-disk=${{ env.VM_INSTANCE_NAME }} \
           --source-disk-zone=${{ env.VM_ZONE }} \
           --storage-location=${{ env.REGION }}
+
+      - name: Update the instance template to use the new boot image
+        run: |
+          gcloud compute instance-groups managed rolling-action start-update ${{ env.INSTANCE_GROUP_NAME }} \
+          --region=${{ env.REGION }} \
+          --type=proactive \
+          --max-unavailable=3 \
+          --minimal-action=replace \
+          --replacement-method=recreate \
+          --max-surge=0 \
+          --version=template=projects/${{ secrets.GCP_PROJECT_ID }}/regions/${{ env.REGION }}/instanceTemplates/${{ env.INSTANCE_TEMPLATE_NAME }},name=0-1774722886304
