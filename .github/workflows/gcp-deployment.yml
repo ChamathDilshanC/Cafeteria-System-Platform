@@ -30,5 +30,6 @@ jobs:
 
       - name: Connnect with the cafeteria-system-vm-platform-seed through SSH and pull the latest code from the repository
         run: |
-          gcloud compute ssh ${{ env.VM_INSTANCE_NAME }} --zone=${{ env.VM_ZONE }}
-          --command "echo 'Connected to ${{ env.VM_INSTANCE_NAME }} Successfully!'"
+          gcloud compute ssh ${{ env.VM_INSTANCE_NAME }} \
+                  --zone=${{ env.VM_ZONE }} \
+                  --command "echo 'Connected to ${{ env.VM_INSTANCE_NAME }} Successfully!'"
