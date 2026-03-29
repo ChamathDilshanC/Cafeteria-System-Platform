@@ -5,6 +5,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    # Environment variables for the VM instance and deployment configuration
     env:
       VM_INSTANCE_NAME: cafeteria-system-vm-platform-seed
       INSTANCE_GROUP_NAME: mig-platform
